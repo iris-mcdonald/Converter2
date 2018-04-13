@@ -1,0 +1,97 @@
+﻿@model Web.ViewModels.Converter.IndexViewModel
+
+@{
+                /**/
+
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Converter";
+}
+
+<h2>Converter</h2>
+
+@using (Html.BeginForm("Index", "Converter", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <br /><br />
+    <h3>Select a Conversion Type: </h3>
+    <p></p>
+    <br />
+
+
+    @Html.DropDownListFor(model => model.ViewConvertSelect, Model.ViewConversionTypes,
+                                                new { @id = "convertTypeId", @onchange = "onchangeevent();" })
+
+
+
+    <script>
+      window.onload = function () {
+          //$(document).ready(function () {
+          if ($("#convertTypeId option:selected").text() == 'Volume') {
+              $('#fromid').text('Liters');
+              $('#toid').text('Gallons');
+              return;
+          }
+          if ($("#convertTypeId option:selected").text() == 'Temperature') {
+              $('#fromid').text('Celcius');
+              $('#toid').text('Fahrenheit');
+              return;
+          }
+          if ($("#convertTypeId option:selected").text() == 'Weight') {
+              $('#fromid').text('Kilograms');
+              $('#toid').text('Pounds');
+              return;
+          }
+      };
+      function onchangeevent() {
+        @*//Set From and To Convert Text Input Box Labels Based on Convert Type Selected from Dropdown*@
+
+          if ($("#convertTypeId option:selected").text() == 'Volume') {
+              $('#fromid').text('Liters');
+              $('#toid').text('Gallons');
+              $('#convertFromId').val(0);
+              $('#convertToId').val(0);
+              return;
+          }
+          if ($("#convertTypeId option:selected").text() == 'Temperature') {
+              $('#fromid').text('Celcius');
+              $('#toid').text('Fahrenheit');
+              $('#convertFromId').val(0);
+              $('#convertToId').val(0);
+              return;
+          }
+          if ($("#convertTypeId option:selected").text() == 'Weight') {
+              $('#fromid').text('Kilograms');
+              $('#toid').text('Pounds');
+              $('#convertFromId').val(0);
+              $('#convertToId').val(0);
+              return;
+          }
+      }
+
+    </script>
+    <br /><br />
+
+
+    <label for="Convert From" id="fromid"></label>
+
+    @Html.TextBoxFor(model => model.ViewConvertFrom, new { id = "convertFromId" });
+
+
+    <label for="Convert To" id="toid"></label>
+
+    @Html.TextBoxFor(model => model.ViewConvertTo, new { id = "convertToId" }); <br /><br /><br />
+
+    <input class="convertTempButton" id="leftbtn" type="submit" value="Convert " /> 
+
+    @Html.DropDownListFor(model => model.ViewConvertDirection, Model.ViewConvertDirections,
+                                                new { @id = "convertDirectionId" })
+
+
+    
+
+
+
+
+}
